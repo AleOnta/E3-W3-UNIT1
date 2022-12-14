@@ -6,8 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      *,
-      *::before,
+      * {
+        box-sizing: border-box;
+      }
+
+      *::before {
+        box-sizing: border-box;
+      }
+
       *::after {
         box-sizing: border-box;
       }
@@ -120,12 +126,8 @@
         */
 
       const changeUrls = function () {
-        const collectionOfA = document.querySelectorAll("a");
-        let arrayOfA = Array.from(collectionOfA);
-        arrayOfA = arrayOfA.pop();
-        let myAnchor = 0;
-        for (let i = 0; i < arrayOfA.length; i++) {
-          myAnchor = arrayOfA[i];
+        for (let i = 0; i < document.querySelectorAll("div > a").length; i++) {
+          const myAnchor = document.querySelectorAll("div > a")[i];
           myAnchor.setAttribute("href", "https://www.google.com");
         }
       };
@@ -153,8 +155,7 @@
         const myDiv = document.querySelector("div div");
         let newParagraph = document.createElement("p");
         newParagraph.innerHTML = textOfP;
-        const father = myDiv;
-        father.appendChild(newParagraph);
+        myDiv.appendChild(newParagraph);
       };
 
       addParagraph("This is the 2nd paragraph");
@@ -193,16 +194,19 @@
         let text = myH1.innerText;
         let newText = text.substring(0, text.length - 1);
         myH1.innerText = newText;
-      };
 
-      myH1 = document.querySelector("h1");
-      myH1.addEventListener("click", makeItClickable);
+        myH1 = document.querySelector("h1");
+        myH1.addEventListener("click", makeItClickable);
+      };
 
       /* ESERCIZIO 10
          Crea una funzione che, al click sul footer, riveli l'URL del link interno come contenuto di un alert()
         */
 
-      const revealFooterLink = function () {};
+      const revealFooterLink = function () {
+        const footerLink = document.querySelector("footer a").href;
+        alert(footerLink);
+      };
 
       /* ESERCIZIO 11
          Crea una funzione che crei una tabella nell'elemento con id "tableArea".
@@ -210,6 +214,23 @@
       */
 
       const generateTable = function () {
+        const container = document.getElementById("tableArea");
+        const table = document.createElement("table");
+        table.style.width = "100%";
+        table.style.border = "1px solid black";
+        table.style.borderCollapse = "collapse";
+
+        const firstRow = document.createElement("tr");
+
+        const thImage = document.createElement("th");
+        thImage.innerText = "Immagine";
+        const thProduct = document.createElement("th");
+        thProduct.innerText = "Nome prodotto";
+        const thQuantity = document.createElement("th");
+        thQuantity.innerText = "Prezzo";
+        const thPrice = document.createElement("th");
+
+        const smartphone = ["Galaxy", "Oppo A", "Samsung", "Xiaomi", "OnePlus"];
         const images = [
           "https://m.media-amazon.com/images/I/81yJf4K+L1L._AC_SY450_.jpg",
           "https://m.media-amazon.com/images/I/61MRTh9xotL._AC_SX679_.jpg",
@@ -217,22 +238,32 @@
           "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1661333885.70133010!500x500.png",
           "https://tomatosmartphone.it/wp-content/uploads/2022/06/EU-IN_Green.png",
         ];
-        const structure = ["nome prodotto", "quantità", "prezzo"];
-        const table = document.createElement("table");
-        const tableBody = document.createElement("tbody");
-        for (let i = 0; i < 5; i++) {
-          const row = document.createElement("tr");
-          for (let o = 0; o < 4; o++) {
-            const cell = document.createElement("td");
-            const cellText = document.createTextNode(structure[i]);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-          }
-          tableBody.appendChild(row);
+
+        firstRow.append(thImage);
+        firstRow.append(thProduct);
+        firstRow.append(thQuantity);
+        firstRow.append(thPrice);
+        table.appendChild(firstRow);
+
+        for (let i = 0; i < images.length; i++) {
+          const newRow = document.createElement("tr");
+
+          const thImage = document.createElement("td");
+          thImage.innerHTML = `<img src=${images[i]} alt="Photo of a smartphone" height="200"/>`;
+          const thProduct = document.createElement("td");
+          thProduct.innerText = smartphone[i];
+          const thQuantity = document.createElement("td");
+          thQuantity.innerText = Math.floor(Math.random() * 35);
+          const thPrice = document.createElement("td");
+          thPrice.innerText = Math.floor(Math.random() * 86);
+
+          newRow.appendChild(thImage);
+          newRow.appendChild(thProduct);
+          newRow.appendChild(thQuantity);
+          newRow.appendChild(thPrice);
+          table.appendChild(newRow);
         }
-        table.appendChild(tableBody);
-        document.body.appendChild(table);
-        table.setAttribute("border", "2");
+        container.appendChild(table);
       };
 
       generateTable();
@@ -241,7 +272,12 @@
          Crea una funzione che aggiunga una riga alla tabella precedentemente creata e fornisca i dati necessari come parametri
       */
 
-      const addRow = function () {};
+      // const addRow = function () {
+      //   const newRow = document.createAttribute("tr");
+      //
+      // };
+
+      // addRow();
 
       /* ESERCIZIO 14
         Crea una funzione che nasconda le immagini della tabella quando eseguita
@@ -258,8 +294,6 @@
       /* EXTRA ESERCIZIO 16
         Crea una funzione che elimini le vocali da ogni elemento testuale della pagina (puoi aiutarti con i nuovi metodi degli array di ES6)
       */
-
-      const deleteVowels = function () {};
     </script>
   </body>
 </html>
