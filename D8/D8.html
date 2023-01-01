@@ -347,6 +347,35 @@
       /* EXTRA ESERCIZIO 16
         Crea una funzione che elimini le vocali da ogni elemento testuale della pagina (puoi aiutarti con i nuovi metodi degli array di ES6)
       */
+      const tableAgent = () => {
+        const myTable = [];
+        // got element needed from the dom - "tr" & "td"
+        let myTableTh = document.getElementsByTagName("th");
+        let myTableTd = document.getElementsByTagName("td");
+
+        // turn the two collections received in arrays
+        myTableTh = Array.from(myTableTh);
+        myTableTd = Array.from(myTableTd);
+
+        // build a forEach statement for both of the arrays obtained to push all elements inside of them into a new array
+        myTableTh.forEach((element) => {
+          myTable.push(element);
+        });
+        myTableTd.forEach((element) => {
+          myTable.push(element);
+        });
+
+        const regex = /<img/gi;
+        myTable.forEach((element) => {
+          if (regex.test(element.innerHTML) !== true) {
+            const actualText = element.innerText;
+            const textNoVowels = actualText.replace(/[aeiou]/gi, "");
+            element.innerText = textNoVowels;
+          }
+        });
+      };
+      tableAgent();
+
       const vowelsTerminator = () => {
         const allCollection = document.querySelectorAll("div > *");
         const allArray = Array.from(allCollection);
