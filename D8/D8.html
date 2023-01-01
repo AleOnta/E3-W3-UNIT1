@@ -36,6 +36,16 @@
       .myHeading {
         color: #ff00d6;
       }
+
+      td,
+      th {
+        border: 1px solid black;
+        text-align: center;
+      }
+
+      tr {
+        border: 1px solid black;
+      }
     </style>
   </head>
 
@@ -194,10 +204,10 @@
         let text = myH1.innerText;
         let newText = text.substring(0, text.length - 1);
         myH1.innerText = newText;
-
-        myH1 = document.querySelector("h1");
-        myH1.addEventListener("click", makeItClickable);
       };
+
+      myH1 = document.querySelector("h1");
+      myH1.addEventListener("click", makeItClickable);
 
       /* ESERCIZIO 10
          Crea una funzione che, al click sul footer, riveli l'URL del link interno come contenuto di un alert()
@@ -216,7 +226,9 @@
       const generateTable = function () {
         const container = document.getElementById("tableArea");
         const table = document.createElement("table");
-        table.style.width = "100%";
+        table.setAttribute("id", "table");
+        table.style.width = "75%";
+        table.style.margin = "auto";
         table.style.border = "1px solid black";
         table.style.borderCollapse = "collapse";
 
@@ -227,8 +239,9 @@
         const thProduct = document.createElement("th");
         thProduct.innerText = "Nome prodotto";
         const thQuantity = document.createElement("th");
-        thQuantity.innerText = "Prezzo";
+        thQuantity.innerText = "Quantità";
         const thPrice = document.createElement("th");
+        thPrice.innerText = "Prezzo";
 
         const smartphone = ["Galaxy", "Oppo A", "Samsung", "Xiaomi", "OnePlus"];
         const images = [
@@ -249,7 +262,7 @@
           const newRow = document.createElement("tr");
 
           const thImage = document.createElement("td");
-          thImage.innerHTML = `<img src=${images[i]} alt="Photo of a smartphone" height="200"/>`;
+          thImage.innerHTML = `<img src=${images[i]} alt="Photo of a smartphone" height="100"/>`;
           const thProduct = document.createElement("td");
           thProduct.innerText = smartphone[i];
           const thQuantity = document.createElement("td");
@@ -271,29 +284,83 @@
       /* ESERCIZIO 12
          Crea una funzione che aggiunga una riga alla tabella precedentemente creata e fornisca i dati necessari come parametri
       */
+      const imgURL = "https://m.media-amazon.com/images/I/71aM5YgAM6L._AC_SS450_.jpg";
+      const theProduct = "Samyang";
+      const theQuantity = Math.floor(Math.random() * 35);
+      const thePrice = Math.floor(Math.random() * 86);
+      const theFather = document.getElementById("table");
 
-      // const addRow = function () {
-      //   const newRow = document.createAttribute("tr");
-      //
-      // };
+      const addRow = function (product, quantity, price) {
+        const newRow = document.createElement("tr");
 
-      // addRow();
+        // Creo tutte le celle necessarie
+        const tdImage = document.createElement("td");
+        tdImage.innerHTML = `<img src=${imgURL} alt="Photo of a smartphone" height="100"/>`;
+        const tdProduct = document.createElement("td");
+        tdProduct.innerText = product;
+        const tdQuantity = document.createElement("td");
+        tdQuantity.innerText = quantity;
+        const tdPrice = document.createElement("td");
+        tdPrice.innerText = price;
+
+        // Vado ad appendere ogni cella alla nuova riga, e poi appendo la riga alla tabella
+        newRow.appendChild(tdImage);
+        newRow.appendChild(tdProduct);
+        newRow.appendChild(tdQuantity);
+        newRow.appendChild(tdPrice);
+        theFather.appendChild(newRow);
+      };
+
+      addRow(theProduct, theQuantity, thePrice);
 
       /* ESERCIZIO 14
         Crea una funzione che nasconda le immagini della tabella quando eseguita
       */
 
-      const hideAllImages = function () {};
+      const hideAllImages = function () {
+        const imagesCollection = document.getElementsByTagName("img");
+        for (let i = 0; i < imagesCollection.length; i++) {
+          imagesCollection[i].style.display = "none";
+        }
+      };
+
+      // hideAllImages();
+      // The call for the function is commented to leave displayed the images on the webpage, altought the function works fine.
+      // To check the function uncomment row 323
 
       /* EXTRA ESERCIZIO 15
         Crea una funzione che cambi il colore del h2 con id "changeMyColor" con un colore random ad ogni click ricevuto
       */
 
-      const changeColorWithRandom = function () {};
+      const changeColorWithRandom = function () {
+        const myH2 = document.getElementById("changeMyColor");
+        const myRgbArray = [];
+        for (let i = 0; i < 3; i++) {
+          myRgbArray.push(Math.floor(Math.random() * 255 + 1));
+        }
+        myH2.style.color = `rgb(${myRgbArray[0]}, ${myRgbArray[1]}, ${myRgbArray[0]}`;
+      };
+
+      const myH2 = document.getElementById("changeMyColor");
+      myH2.addEventListener("click", changeColorWithRandom);
 
       /* EXTRA ESERCIZIO 16
         Crea una funzione che elimini le vocali da ogni elemento testuale della pagina (puoi aiutarti con i nuovi metodi degli array di ES6)
       */
+      const vowelsTerminator = () => {
+        const allCollection = document.querySelectorAll("div > *");
+        const allArray = Array.from(allCollection);
+        allArray.pop();
+        allArray.forEach((element) => {
+          if (element.innerText.length !== "") {
+            const actualText = element.innerText;
+            const textNoVowels = actualText.replace(/[aeiou]/gi, "");
+            element.innerText = textNoVowels;
+          }
+        });
+      };
+
+      vowelsTerminator();
     </script>
   </body>
 </html>
