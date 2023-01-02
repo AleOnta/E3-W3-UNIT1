@@ -365,20 +365,14 @@
           myTable.push(element);
         });
 
-        const regex = /<img/gi;
-        myTable.forEach((element) => {
-          if (regex.test(element.innerHTML) !== true) {
-            const actualText = element.innerText;
-            const textNoVowels = actualText.replace(/[aeiou]/gi, "");
-            element.innerText = textNoVowels;
-          }
-        });
+        return myTable;
       };
-      tableAgent();
 
       const vowelsTerminator = () => {
+        // Works on all the strings elements of the DOM apart the elements inside of the table
         const allCollection = document.querySelectorAll("div > *");
         const allArray = Array.from(allCollection);
+        // the pop delete the last elements of the array (the table)
         allArray.pop();
         allArray.forEach((element) => {
           if (element.innerText.length !== "") {
@@ -386,6 +380,19 @@
             const textNoVowels = actualText.replace(/[aeiou]/gi, "");
             element.innerText = textNoVowels;
           }
+
+          // create a new array with all td & th inside of the table - calling a function to do that
+          const myTable = tableAgent();
+
+          // declaring a regex to prevent the images to be overwritten by other html
+          const regex = /<img/gi;
+          myTable.forEach((element) => {
+            if (regex.test(element.innerHTML) !== true) {
+              const actualText = element.innerText;
+              const textNoVowels = actualText.replace(/[aeiou]/gi, "");
+              element.innerText = textNoVowels;
+            }
+          });
         });
       };
 
